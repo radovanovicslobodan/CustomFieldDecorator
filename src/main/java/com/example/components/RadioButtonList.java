@@ -5,7 +5,6 @@ import com.example.enums.Ingredient;
 import com.example.utils.ComponentFactory;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RadioButtonList {
@@ -13,10 +12,7 @@ public class RadioButtonList {
 	// Container: div with multiple radio+label groups
 	private final WebElement container;
 
-	// Individual items: each <div class="flex items-center gap-2">
 	@FindInside(css = "div.flex.items-center.gap-2")
-	private List<WebElement> itemContainers;
-
 	private List<RadioButton> radioButtons;
 
 	public RadioButtonList(WebElement container) {
@@ -24,12 +20,6 @@ public class RadioButtonList {
 		this.container = container;
 		// Initialize self using ComponentFactory-style decorator
 		ComponentFactory.initElements(container, this);
-
-		// Create RadioButton components
-		this.radioButtons = new ArrayList<>();
-		for (WebElement item : itemContainers) {
-			radioButtons.add(new RadioButton(item));
-		}
 	}
 
 	/**
