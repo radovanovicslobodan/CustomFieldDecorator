@@ -9,15 +9,11 @@ import java.util.List;
 
 public class RadioButtonList {
 
-	// Container: div with multiple radio+label groups
-	private final WebElement container;
-
 	@FindInside(css = "div.flex.items-center.gap-2")
 	private List<RadioButton> radioButtons;
 
 	public RadioButtonList(WebElement container) {
 
-		this.container = container;
 		// Initialize self using ComponentFactory-style decorator
 		ComponentFactory.initElements(container, this);
 	}
