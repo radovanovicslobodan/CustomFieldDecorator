@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RadioButtonList {
 
-	@FindInside(css = "div.flex.items-center.gap-2")
+	@FindInside(css = ".flex.items-center")
 	private List<RadioButton> radioButtons;
 
 	public RadioButtonList(WebElement container) {

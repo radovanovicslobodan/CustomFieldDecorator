@@ -1,7 +1,9 @@
 package tests;
 
+import com.example.enums.City;
 import com.example.enums.Ingredient;
-import com.example.pages.PrimeVuePage;
+import com.example.pages.PrimeVueDropdownPage;
+import com.example.pages.PrimeVueSelectPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -13,23 +15,36 @@ import java.time.Duration;
 public class PrimeVueTest {
 
 	private WebDriver driver;
-	private PrimeVuePage primeVuePage;
+	private PrimeVueSelectPage primeVueSelectPage;
+	private PrimeVueDropdownPage primeVueDropdownPage;
 
 	@BeforeClass
 	public void setup() {
 
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.get("https://primevue.org/radiobutton/");
-		primeVuePage = new PrimeVuePage(driver);
 	}
 
 	@Test
 	public void shouldSelectOnion() {
 
-		primeVuePage.selectIngredient(Ingredient.MUSHROOM);
+		driver.get("https://primevue.org/radiobutton/");
+		primeVueSelectPage = new PrimeVueSelectPage(driver);
 
-		Assert.assertEquals(primeVuePage.getSelectedIngredient(), Ingredient.MUSHROOM);
+		primeVueSelectPage.selectIngredient(Ingredient.MUSHROOM);
+
+		Assert.assertEquals(primeVueSelectPage.getSelectedIngredient(), Ingredient.MUSHROOM);
+	}
+
+	@Test
+	public void shouldSelectCity() {
+
+		driver.get("https://v3.primevue.org/dropdown/");
+		primeVueDropdownPage = new PrimeVueDropdownPage(driver);
+
+		primeVueDropdownPage.selectCity(City.PARIS);
+
+		//		Assert.assertEquals(primeVueSelectPage.getSelectedIngredient(), Ingredient.MUSHROOM);
 	}
 
 	//  @AfterClass
