@@ -3,70 +3,75 @@ package com.example.components;
 import com.example.annotations.FindInside;
 import com.example.enums.Ingredient;
 import com.example.utils.ComponentFactory;
+import org.openqa.selenium.WebElement;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.openqa.selenium.WebElement;
 
 public class RadioButtonList {
 
-  // Container: div with multiple radio+label groups
-  private final WebElement container;
+	// Container: div with multiple radio+label groups
+	private final WebElement container;
 
-  // Individual items: each <div class="flex items-center gap-2">
-  @FindInside(css = "div.flex.items-center.gap-2")
-  private List<WebElement> itemContainers;
+	// Individual items: each <div class="flex items-center gap-2">
+	@FindInside(css = "div.flex.items-center.gap-2")
+	private List<WebElement> itemContainers;
 
-  private List<RadioButton> radioButtons;
+	private List<RadioButton> radioButtons;
 
-  public RadioButtonList(WebElement container) {
-    this.container = container;
-    // Initialize self using ComponentFactory-style decorator
-    ComponentFactory.initElements(container, this);
+	public RadioButtonList(WebElement container) {
 
-    // Create RadioButton components
-    this.radioButtons = new ArrayList<>();
-    for (WebElement item : itemContainers) {
-      radioButtons.add(new RadioButton(item));
-    }
-  }
+		this.container = container;
+		// Initialize self using ComponentFactory-style decorator
+		ComponentFactory.initElements(container, this);
 
-  /**
-   * Selects the radio button matching the enum's display name.
-   */
-  public void selectOption(Ingredient option) {
-    String targetName = option.getDisplayName();
+		// Create RadioButton components
+		this.radioButtons = new ArrayList<>();
+		for (WebElement item : itemContainers) {
+			radioButtons.add(new RadioButton(item));
+		}
+	}
 
-    for (RadioButton rb : radioButtons) {
-      if (rb.getLabel().equals(targetName)) {
-        rb.select();
-        return;
-      }
-    }
+	/**
+	 * Selects the radio button matching the enum's display name.
+	 */
+	public void selectOption(Ingredient option) {
 
-    throw new IllegalArgumentException("Radio option '" + targetName + "' not found.");
-  }
+		String targetName = option.getDisplayName();
 
-  /**
-   * Returns the currently selected option, if any.
-   */
-  public Ingredient getSelectedOption() {
-    for (RadioButton rb : radioButtons) {
-      if (rb.isSelected()) {
-        try {
-          return Ingredient.valueOf(rb.getLabel().toUpperCase().replace(" ", "_"));
-        } catch (IllegalArgumentException e) {
-          // Not in enum
-        }
-      }
-    }
-    return null;
-  }
+		for (RadioButton rb : radioButtons) {
+			if (rb.getLabel().equals(targetName)) {
+				rb.select();
+				return;
+			}
+		}
 
-  /**
-   * Checks if an option exists and is enabled
-   */
-  public boolean isOptionAvailable(Ingredient option) {
-    return radioButtons.stream()
-        .anyMatch(rb -> rb.getLabel().equals(option.getDisplayName()) && rb.isEnabled());
-  }
+		throw new IllegalArgumentException("Radio option '" + targetName + "' not found.");
+	}
+
+	/**
+	 * Returns the currently selected option, if any.
+	 */
+	public Ingredient getSelectedOption() {
+
+		for (RadioButton rb : radioButtons) {
+			if (rb.isSelected()) {
+				try {
+					return Ingredient.valueOf(rb.getLabel().toUpperCase().replace(" ", "_"));
+				} catch (IllegalArgumentException e) {
+					// Not in enum
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if an option exists and is enabled
+	 */
+	public boolean isOptionAvailable(Ingredient option) {
+
+		return radioButtons.stream()
+				.anyMatch(rb -> rb.getLabel().equals(option.getDisplayName()) && rb.isEnabled());
+	}
 }
