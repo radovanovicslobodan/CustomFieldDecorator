@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class PrimeVueDropdownPage {
 
 	private WebDriver driver;
+	private Dropdown dropdown;
 
 	@FindBy(xpath = "//div[@id='pv_id_45']/parent::div") // container div with p-dropdown
 	private WebElement cityDropdownContainer;
@@ -18,11 +19,16 @@ public class PrimeVueDropdownPage {
 
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		dropdown = new Dropdown(cityDropdownContainer, driver);
 	}
 
 	public void selectCity(City city) {
 
-		Dropdown dropdown = new Dropdown(cityDropdownContainer, driver);
 		dropdown.selectByVisibleText(city);
+	}
+
+	public String getSelectedCity() {
+
+		return dropdown.getSelectedText();
 	}
 }

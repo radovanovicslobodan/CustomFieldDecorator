@@ -44,7 +44,7 @@ public class PrimeVueTest {
 
 		primeVueDropdownPage.selectCity(City.PARIS);
 
-		//		Assert.assertEquals(primeVueSelectPage.getSelectedIngredient(), Ingredient.MUSHROOM);
+		Assert.assertEquals(primeVueDropdownPage.getSelectedCity(), City.PARIS.getDisplayName());
 	}
 
 	//  @AfterClass
