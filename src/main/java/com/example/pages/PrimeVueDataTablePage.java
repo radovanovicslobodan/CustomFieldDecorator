@@ -9,31 +9,31 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PrimeVueDataTablePage {
 
-	private WebDriver driver;
-	private DataTable table;
-	private VirtualDataTable virtualTable;
+  private WebDriver driver;
+  private DataTable table;
+  private VirtualDataTable virtualTable;
 
-	@FindBy(css = "[pv_id_188] table") // container div with p-dropdown
-	private WebElement tableContainer;
+  @FindBy(css = "[pv_id_188] table") // container div with p-dropdown
+  private WebElement tableContainer;
 
-	@FindBy(css = "[data-pc-extend='virtualscroller']")
-	private WebElement virtualTableContainer;
+  @FindBy(css = "section:nth-child(17) .p-datatable-wrapper")
+  private WebElement virtualTableContainer;
 
-	public PrimeVueDataTablePage(WebDriver driver) {
+  public PrimeVueDataTablePage(WebDriver driver) {
 
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-		table = new DataTable(tableContainer, driver);
-		virtualTable = new VirtualDataTable(tableContainer, virtualTableContainer, driver, 20);
-	}
+    this.driver = driver;
+    PageFactory.initElements(driver, this);
+    table = new DataTable(tableContainer, driver);
+    virtualTable = new VirtualDataTable(virtualTableContainer, driver, 100);
+  }
 
-	public DataTable getTable() {
+  public DataTable getTable() {
 
-		return table;
-	}
+    return table;
+  }
 
-	public VirtualDataTable getVirtualTable() {
+  public VirtualDataTable getVirtualTable() {
 
-		return virtualTable;
-	}
+    return virtualTable;
+  }
 }

@@ -7,6 +7,7 @@ import com.example.enums.Ingredient;
 import com.example.pages.PrimeVueDataTablePage;
 import com.example.pages.PrimeVueDropdownPage;
 import com.example.pages.PrimeVueSelectPage;
+import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,81 +15,80 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
 public class PrimeVueTest {
 
-	private WebDriver driver;
-	private PrimeVueSelectPage primeVueSelectPage;
-	private PrimeVueDropdownPage primeVueDropdownPage;
-	private PrimeVueDataTablePage primeVueDataTablePage;
+  private WebDriver driver;
+  private PrimeVueSelectPage primeVueSelectPage;
+  private PrimeVueDropdownPage primeVueDropdownPage;
+  private PrimeVueDataTablePage primeVueDataTablePage;
 
-	@BeforeClass
-	public void setup() {
+  @BeforeClass
+  public void setup() {
 
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-	}
+    driver = new ChromeDriver();
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+  }
 
-	@Test
-	public void shouldSelectOnion() {
+  @Test
+  public void shouldSelectOnion() {
 
-		driver.get("https://primevue.org/radiobutton/");
-		primeVueSelectPage = new PrimeVueSelectPage(driver);
+    driver.get("https://primevue.org/radiobutton/");
+    primeVueSelectPage = new PrimeVueSelectPage(driver);
 
-		primeVueSelectPage.selectIngredient(Ingredient.MUSHROOM);
+    primeVueSelectPage.selectIngredient(Ingredient.MUSHROOM);
 
-		Assert.assertEquals(primeVueSelectPage.getSelectedIngredient(), Ingredient.MUSHROOM);
-	}
+    Assert.assertEquals(primeVueSelectPage.getSelectedIngredient(), Ingredient.MUSHROOM);
+  }
 
-	@Test
-	public void shouldSelectCity() {
+  @Test
+  public void shouldSelectCity() {
 
-		driver.get("https://v3.primevue.org/dropdown/");
-		primeVueDropdownPage = new PrimeVueDropdownPage(driver);
+    driver.get("https://v3.primevue.org/dropdown/");
+    primeVueDropdownPage = new PrimeVueDropdownPage(driver);
 
-		primeVueDropdownPage.selectCity(City.PARIS);
+    primeVueDropdownPage.selectCity(City.PARIS);
 
-		Assert.assertEquals(primeVueDropdownPage.getSelectedCity(), City.PARIS.getDisplayName());
-	}
+    Assert.assertEquals(primeVueDropdownPage.getSelectedCity(), City.PARIS.getDisplayName());
+  }
 
-	@Test
-	public void tableTest() {
+  @Test
+  public void tableTest() {
 
-		driver.get("https://v3.primevue.org/datatable/#multiple_sort");
-		primeVueDataTablePage = new PrimeVueDataTablePage(driver);
+    driver.get("https://v3.primevue.org/datatable/#multiple_sort");
+    primeVueDataTablePage = new PrimeVueDataTablePage(driver);
 
-		DataTable table = primeVueDataTablePage.getTable();
+    DataTable table = primeVueDataTablePage.getTable();
 
-		int nameColIndex = table.getColumnIndex("Name"); // 1
-		boolean isNameSorted = table.isColumnSorted("Name"); // true
-		String sortOrder = table.getColumnSortOrder("Name"); // "descending"
+    int nameColIndex = table.getColumnIndex("Name"); // 1
+    boolean isNameSorted = table.isColumnSorted("Name"); // true
+    String sortOrder = table.getColumnSortOrder("Name"); // "descending"
 
-		WebElement row = table.getRowByColumnValue("Code", "h456wer53");
-		String category = table.getCellText(0, "Category"); // "Accessories"
-	}
+    WebElement row = table.getRowByColumnValue("Code", "h456wer53");
+    String category = table.getCellText(0, "Category"); // "Accessories"
+  }
 
-	@Test
-	public void virtualTableTest() {
+  @Test
+  public void virtualTableTest() {
 
-		driver.get("https://v3.primevue.org/datatable/#virtualscroll");
-		primeVueDataTablePage = new PrimeVueDataTablePage(driver);
+    driver.get("https://v3.primevue.org/datatable/#virtualscroll");
+    primeVueDataTablePage = new PrimeVueDataTablePage(driver);
 
-		VirtualDataTable table = primeVueDataTablePage.getVirtualTable();
+    VirtualDataTable table = primeVueDataTablePage.getVirtualTable();
 
-		int nameColIndex = table.getColumnIndex("Brand"); // 1
-		boolean isNameSorted = table.isColumnSorted("Brand"); // true
-		String sortOrder = table.getColumnSortOrder("Brand"); // "descending"
+    int nameColIndex = table.getColumnIndex("Vin"); // 1
+    boolean isNameSorted = table.isColumnSorted("Brand"); // true
+    String sortOrder = table.getColumnSortOrder("Brand"); // "descending"
 
-		WebElement row = table.getRowByColumnValue("Vin", "Vin");
-		String category = table.getCellText(0, "Color"); // "Accessories"
-	}
+//    WebElement row = table.getRowByColumnValueInVirtualScroll("Id", "90", 100);
+    table.scrollToRow(90);
+    String category = table.getCellText(2, "Color"); // "Accessories"
+  }
 
-	//  @AfterClass
-	public void tearDown() {
+  //  @AfterClass
+  public void tearDown() {
 
-		if (driver != null) {
-			driver.quit();
-		}
-	}
+    if (driver != null) {
+      driver.quit();
+    }
+  }
 }
