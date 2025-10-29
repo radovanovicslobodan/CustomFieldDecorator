@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Dropdown {
 
-	private WebDriver driver;
-	private final WebElement container;
+	protected WebDriver driver;
+	protected final WebElement container;
 
 	// Use your @FindInside to locate elements within the container
 	@FindInside(id = "pv_id_45")

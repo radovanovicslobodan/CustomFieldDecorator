@@ -1,10 +1,14 @@
 package tests;
 
+import com.example.components.DataTable;
+import com.example.components.VirtualDataTable;
 import com.example.enums.City;
 import com.example.enums.Ingredient;
+import com.example.pages.PrimeVueDataTablePage;
 import com.example.pages.PrimeVueDropdownPage;
 import com.example.pages.PrimeVueSelectPage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -17,6 +21,7 @@ public class PrimeVueTest {
 	private WebDriver driver;
 	private PrimeVueSelectPage primeVueSelectPage;
 	private PrimeVueDropdownPage primeVueDropdownPage;
+	private PrimeVueDataTablePage primeVueDataTablePage;
 
 	@BeforeClass
 	public void setup() {
@@ -45,6 +50,38 @@ public class PrimeVueTest {
 		primeVueDropdownPage.selectCity(City.PARIS);
 
 		Assert.assertEquals(primeVueDropdownPage.getSelectedCity(), City.PARIS.getDisplayName());
+	}
+
+	@Test
+	public void tableTest() {
+
+		driver.get("https://v3.primevue.org/datatable/#multiple_sort");
+		primeVueDataTablePage = new PrimeVueDataTablePage(driver);
+
+		DataTable table = primeVueDataTablePage.getTable();
+
+		int nameColIndex = table.getColumnIndex("Name"); // 1
+		boolean isNameSorted = table.isColumnSorted("Name"); // true
+		String sortOrder = table.getColumnSortOrder("Name"); // "descending"
+
+		WebElement row = table.getRowByColumnValue("Code", "h456wer53");
+		String category = table.getCellText(0, "Category"); // "Accessories"
+	}
+
+	@Test
+	public void virtualTableTest() {
+
+		driver.get("https://v3.primevue.org/datatable/#virtualscroll");
+		primeVueDataTablePage = new PrimeVueDataTablePage(driver);
+
+		VirtualDataTable table = primeVueDataTablePage.getVirtualTable();
+
+		int nameColIndex = table.getColumnIndex("Brand"); // 1
+		boolean isNameSorted = table.isColumnSorted("Brand"); // true
+		String sortOrder = table.getColumnSortOrder("Brand"); // "descending"
+
+		WebElement row = table.getRowByColumnValue("Vin", "Vin");
+		String category = table.getCellText(0, "Color"); // "Accessories"
 	}
 
 	//  @AfterClass
