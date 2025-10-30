@@ -79,8 +79,8 @@ public class PrimeVueTest {
     boolean isNameSorted = table.isColumnSorted("Brand"); // true
     String sortOrder = table.getColumnSortOrder("Brand"); // "descending"
 
-//    WebElement row = table.getRowByColumnValueInVirtualScroll("Id", "90", 100);
-    table.scrollToRow(90);
+//    WebElement row = table.getRowByColumnValueInVirtualScroll("Id", "90");
+    table.scrollToRow(70);
     String category = table.getCellText(2, "Color"); // "Accessories"
   }
 
