@@ -1,5 +1,6 @@
 package com.example.components;
 
+import com.example.annotations.FindInside;
 import com.example.utils.ComponentFactory;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -15,7 +16,10 @@ public class SunburstChart {
   protected final WebDriver driver;
   protected final WebDriverWait wait;
 
-  private final By sliceLocator = By.cssSelector("g.slice");
+//  private final By sliceLocator = By.cssSelector("g.slice");
+
+  @FindInside(css = ".slice")
+  private List<WebElement> sliceElements;
 
   public SunburstChart(WebElement container, WebDriver driver) {
 
@@ -28,7 +32,7 @@ public class SunburstChart {
 
   public List<SunburstSlice> getSlices() {
     List<SunburstSlice> slices = new ArrayList<>();
-    List<WebElement> sliceElements = driver.findElements(sliceLocator);
+//    List<WebElement> sliceElements = driver.findElements(sliceLocator);
 
     for (WebElement slice : sliceElements) {
       try {

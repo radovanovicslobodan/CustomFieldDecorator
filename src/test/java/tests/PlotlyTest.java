@@ -25,10 +25,10 @@ public class PlotlyTest {
   @Test
   public void basicSunburstTest() {
 
-    WebElement container = driver.findElement(By.cssSelector("#myDiv_1 .sunburstlayer"));
-
     driver.get("https://plotly.com/javascript/sunburst-charts/");
 
+    WebElement container = driver.findElement(By.cssSelector("#myDiv_1 .sunburstlayer"));
+    
     SunburstChart sunburst = new SunburstChart(container, driver);
     List<SunburstSlice> slices = sunburst.getSlices();
 
