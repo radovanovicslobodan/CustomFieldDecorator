@@ -2,7 +2,6 @@ package com.example.enums;
 
 public enum Ingredient {
 
-  // dummy comment
   CHEESE("Cheese"),
   MUSHROOM("Mushroom"),
   PEPPER("Pepper"),

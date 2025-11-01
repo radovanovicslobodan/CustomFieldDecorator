@@ -32,7 +32,6 @@ public class SunburstChart {
 
   public List<SunburstSlice> getSlices() {
     List<SunburstSlice> slices = new ArrayList<>();
-//    List<WebElement> sliceElements = driver.findElements(sliceLocator);
 
     for (WebElement slice : sliceElements) {
       try {
