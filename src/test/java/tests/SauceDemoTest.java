@@ -3,7 +3,9 @@ package tests;
 import com.example.pages.LoginPage;
 import com.example.pages.ProductsPage;
 import java.time.Duration;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -29,6 +31,9 @@ public class SauceDemoTest {
     Assert.assertEquals(productsPage.getPageTitle(), "Products");
     Assert.assertEquals(productsPage.getHeader().getLogoText(), "Swag Labs");
     productsPage.getHeader().openCart();
+
+    WebElement radioElement = driver.findElement(By.id("impressiveRadio"));
+    boolean selectState = radioElement.isSelected();
   }
 
   //  @AfterClass
