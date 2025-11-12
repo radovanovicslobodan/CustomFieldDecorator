@@ -19,7 +19,8 @@ public class Dropdown {
   @FindInside(id = "pv_id_45")
   private WebElement trigger;
 
-  //	@FindInside(css = "[aria-controls='pv_id_45_list']")
+  private WebElement dropdownList;
+
   private By dropdownListContainer = By.id("pv_id_45_list");
 
   public Dropdown(WebElement container, WebDriver driver) {
@@ -38,16 +39,6 @@ public class Dropdown {
   public String getSelectedText() {
 
     return trigger.getText();
-    //    try {
-    //      WebElement label = trigger.findElement(By.className("p-dropdown-label"));
-    //      String text = label.getText().trim();
-    //      // Handle placeholder vs selected value
-    //      // PrimeVue shows placeholder if nothing selected (e.g., "Select a City")
-    //      // You may want to return null or empty if placeholder is shown
-    //      return text.isEmpty() || isPlaceholder(label) ? null : text;
-    //    } catch (NoSuchElementException e) {
-    //      return null;
-    //    }
   }
 
   private boolean isPlaceholder(WebElement label) {
@@ -60,10 +51,11 @@ public class Dropdown {
 
     if (!"true".equals(trigger.getAttribute("aria-expanded"))) {
       trigger.click();
-      // Wait until expanded
+      this.dropdownList = driver.findElement(dropdownListContainer);
+      // Wait for the dropdown list to appear in the DOM
       new WebDriverWait(this.driver, Duration.ofSeconds(5))
-          .until(ExpectedConditions.visibilityOf(driver.findElement(dropdownListContainer)));
+          .until(ExpectedConditions.visibilityOf(dropdownList));
     }
-    return new DropdownList(driver.findElement(dropdownListContainer), driver);
+    return new DropdownList(dropdownList, driver);
   }
 }
