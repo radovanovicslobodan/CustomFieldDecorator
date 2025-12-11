@@ -35,9 +35,9 @@ public class TableTest {
     filterTrigger.click();
 
     WebElement selectList = driver.findElement(By.cssSelector(".p-select-list-container ul"));
-    WebElement matchAll = selectList.findElement(By.cssSelector("[aria-posinset='1']"));
-    WebElement matchAny = selectList.findElement(By.cssSelector("[aria-posinset='2']"));
+    WebElement matchAll = driver.findElement(By.cssSelector("[aria-posinset='1']"));
+    WebElement matchAny = driver.findElement(By.cssSelector("[aria-posinset='2']"));
 
-    matchAll.click();
+    matchAny.click();
   }
 }
