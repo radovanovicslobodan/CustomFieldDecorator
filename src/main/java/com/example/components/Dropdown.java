@@ -33,7 +33,7 @@ public class Dropdown {
   public void selectByVisibleText(City city) {
 
     var a = openDropdown();
-    a.selectByVisibleText(city);
+    a.selectOption(city);
   }
 
   public String getSelectedText() {

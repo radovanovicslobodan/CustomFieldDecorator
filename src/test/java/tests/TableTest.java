@@ -1,5 +1,10 @@
 package tests;
 
+import com.example.components.AdvancedFilter;
+import com.example.components.ColumnHeader;
+import com.example.components.DropdownList;
+import com.example.enums.Operator;
+import com.example.enums.Rule;
 import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,19 +30,19 @@ public class TableTest {
 
     WebElement section = driver.findElement(By.xpath("//section[12]"));
     WebElement tableHeader = section.findElement(By.cssSelector(".p-datatable-thead"));
-    WebElement firstColumnHeader = tableHeader.findElements(By.cssSelector("th")).get(0);
+    WebElement firstColumnHeaderContainer = tableHeader.findElements(By.cssSelector("th")).get(0);
 
-    WebElement filterButton = firstColumnHeader.findElement(By.cssSelector(".p-datatable-filter"));
-    filterButton.click();
+    ColumnHeader columnHeader = new ColumnHeader(firstColumnHeaderContainer, driver);
 
-    WebElement filterPopup = driver.findElement(By.cssSelector(".p-datatable-filter-overlay"));
-    WebElement filterTrigger = filterPopup.findElement(By.cssSelector(".p-select-dropdown"));
-    filterTrigger.click();
+    AdvancedFilter advancedFilter = columnHeader.openFilter();
+    DropdownList dropDownList = advancedFilter.openOperatorList();
 
-    WebElement selectList = driver.findElement(By.cssSelector(".p-select-list-container ul"));
-    WebElement matchAll = driver.findElement(By.cssSelector("[aria-posinset='1']"));
-    WebElement matchAny = driver.findElement(By.cssSelector("[aria-posinset='2']"));
+    dropDownList.selectOption(Operator.MATCH_ANY);
 
-    matchAny.click();
+    DropdownList ruleDropDown = advancedFilter.openRuleList();
+    ruleDropDown.selectOption(Rule.NOT_EQUALS);
+
+    advancedFilter.enterSearchTerm("Italy");
+    advancedFilter.clearFilter();
   }
 }
