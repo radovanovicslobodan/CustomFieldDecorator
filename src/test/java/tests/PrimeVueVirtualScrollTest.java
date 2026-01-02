@@ -136,7 +136,7 @@ public class PrimeVueVirtualScrollTest {
   private int getDomMaxIndex() {
     return driver.findElements(By.cssSelector(ROW_SELECTOR))
         .stream()
-        .map(webElement -> webElement.getAttribute("data-p-index"))
+        .map(webElement -> webElement.getDomAttribute("data-p-index"))
         .filter(Objects::nonNull)
         .filter(s -> !s.isEmpty())
         .mapToInt(Integer::parseInt)
@@ -151,7 +151,7 @@ public class PrimeVueVirtualScrollTest {
     List<Row> result = new ArrayList<>();
     for (WebElement row : rows) {
       try {
-        String indexAttr = row.getAttribute("data-p-index");
+        String indexAttr = row.getDomAttribute("data-p-index");
         if (indexAttr == null || indexAttr.isEmpty()) {
           continue;
         }
@@ -159,8 +159,9 @@ public class PrimeVueVirtualScrollTest {
         int index = Integer.parseInt(indexAttr);
         List<WebElement> cells = row.findElements(By.tagName("td"));
         if (!cells.isEmpty()) {
-          String firstCellText = cells.get(0).getText().trim();
-          result.add(new Row(index, firstCellText));
+          String idCellText = cells.get(0).getText().trim();
+          String vinCellText = cells.get(1).getText().trim();
+          result.add(new Row(index, idCellText, vinCellText));
         }
       } catch (Exception e) {
         // Skip malformed rows (e.g., parsing error)
@@ -186,10 +187,12 @@ public class PrimeVueVirtualScrollTest {
 
     int index;
     String text;
+    String vin;
 
-    Row(int index, String text) {
+    Row(int index, String text, String vin) {
       this.index = index;
       this.text = text;
+      this.vin = vin;
     }
   }
 }
